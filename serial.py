@@ -20,7 +20,7 @@ def initialise(GPIO_MODE):
 class PinOut:
 	PIN = None
 
-	def __init__(self, PIN):
+	def __init__(self, PIN, **kwargs):
 		self.PIN = PIN
 		GPIO.setup(PIN, GPIO.OUT)
 
@@ -33,7 +33,7 @@ class PinOut:
 class PinIn:
 	PIN = None
 
-	def __init__(self, PIN):
+	def __init__(self, PIN, **kwargs):
 		self.PIN = PIN
 		GPIO.setup(PIN, GPIO.IN)
 
@@ -49,7 +49,7 @@ class Serial:
 	PIN_CLK = None
 	DELAY = None
 
-	def __init__(self, BUS_WIDTH, PIN_CLK, DELAY):
+	def __init__(self, BUS_WIDTH, PIN_CLK, DELAY, **kwargs):
 		# Initialise class
 		self.BUS_WIDTH = BUS_WIDTH
 		self.PIN_CLK = PIN_CLK
@@ -66,7 +66,7 @@ class Serial:
 class SerialOut(Serial):
 	PIN_DATA = None
 
-	def __init__(self, BUS_WIDTH, PIN_CLK, PIN_DATA, DELAY=0.01):
+	def __init__(self, BUS_WIDTH, PIN_CLK, PIN_DATA, DELAY=0.01, **kwargs):
 		super().__init__( BUS_WIDTH, PIN_CLK, DELAY)
 		self.PIN_DATA = PIN_DATA
 		GPIO.setup(PIN_DATA, GPIO.OUT)
@@ -93,7 +93,7 @@ class SerialOut(Serial):
 class SerialIn(Serial):
 	PIN_DATA = None
 
-	def __init__(self, BUS_WIDTH, PIN_CLK, PIN_DATA, DELAY=0.01):
+	def __init__(self, BUS_WIDTH, PIN_CLK, PIN_DATA, DELAY=0.01, **kwargs):
 		super().__init__( BUS_WIDTH, PIN_CLK, DELAY)
 		self.PIN_DATA = PIN_DATA
 		GPIO.setup(PIN_DATA, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
@@ -119,7 +119,7 @@ class SerialIn(Serial):
 #	Allows for the inspection of certain bits within the circuitry
 #	after each rising and falling clock edge.
 class VirtualOsc(Serial):
-	def __init__(self,  BUS_WIDTH, PIN_CLK, PIN_DATA, DELAY=0.01):
+	def __init__(self,  BUS_WIDTH, PIN_CLK, PIN_DATA, DELAY=0.01, **kwargs):
 		super().__init__(BUS_WIDTH, PIN_CLK, DELAY)
 		self.PIN_DATA = PIN_DATA
 		GPIO.setup(PIN_DATA, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
