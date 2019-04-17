@@ -12,7 +12,10 @@
 	PAGES_PER_TUBE = 2
 	S_TUBES = 2
 
-	DELAY = 0.01
+	SUB_CYCLES = 9
+
+	DELAY = 0.001
+
 
 	[constants.pin_names]
 		# To FPGA
@@ -88,8 +91,20 @@
 	[virtual_oscs.main]
 		PIN_CLK = "pin_names.CLK"
 		PIN_DATA = "pin_names.OSC"
-		BUS_WIDTH = 10
-		BUS_LABELS = ["TEST", "TEST", "TEST", "TEST", "TEST", "TEST", "TEST", "TEST", "TEST", "TEST"]
+		BUS_WIDTH = 50
+		# BUS_LABELS used for plotting purposes only
+		BUS_LABELS = ["w_CLK", "w_HS", "w_HA", "w_PP_WF", "w_PPU_retrig", "w_S1", "w_CL_YPLATE", "w_INSTR_GATE", "w_ACTION_AUTO", "W_ACTION_MAN", "w_ACTION", "w_PARA_ACTION", "~w_PPU_retrig",
+		
+		"b_MS_DATA_OUT[0]", "b_MS_DATA_OUT[1]", "b_MS_DATA_OUT[2]", "b_MS_DATA_OUT[3]", "b_MS_DATA_OUT[4]", 
+		"b_MS_DATA_IN[0]", "b_MS_DATA_IN[1]", "b_MS_DATA_IN[2]", "b_MS_DATA_IN[3]", "b_MS_DATA_IN[4]", 
+		"b_FST_DATA_OUT[0]", "b_FST_DATA_OUT[1]", "b_FST_DATA_OUT[2]", "b_FST_DATA_OUT[3]", "b_FST_DATA_OUT[4]", "b_FST_DATA_OUT[5]",
+		"w_A_ZERO", 
+		"b_A_DATA_IN[0]", "b_A_DATA_IN[1]", "b_A_DATA_IN[2]", "b_A_DATA_IN[3]", "b_A_DATA_IN[4]", 
+		"b_A_DATA_OUT[0]", "b_A_DATA_OUT[1]", "b_A_DATA_OUT[2]", "b_A_DATA_OUT[3]", "b_A_DATA_OUT[4]", 
+		"word_addr[0]", "word_addr[1]", "word_addr[2]", "word_addr[3]", "word_addr[4]", 
+		"tube_addr[0]", "tube_addr[1]", "tube_addr[2]", "tube_addr[3]", "tube_addr[4]", 
+
+		]
 		DELAY = "DELAY"
 
 	[virtual_oscs.controller]

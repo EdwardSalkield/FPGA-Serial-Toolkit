@@ -7,6 +7,7 @@
 import serial
 import toml, pickle
 import os.path
+import warnings
 
 # Circuit Config Class
 #	Abstract representation of a circuit configuration file
@@ -46,7 +47,7 @@ class _CircuitConfig:
 						class_arguments[prop] = key
 
 					else:
-						raise TypeError("Invalid type at " + ".".join([interface, prop]) + " in circuit config. Is " + str(type(key)) + " , should be int, str")
+						warnings.warn("Invalid type at " + ".".join([interface, prop]) + " in circuit config. Is " + str(type(key)) + " , should be int, str")
 
 				serial_objects[interface] = serial_class(**class_arguments)
 
@@ -91,7 +92,7 @@ class Communicator:
 	#  Return the state of an input GPIO pin
 	def receive_pin(self, pin_name):
 		data = self.config.pin_outputs[pin_name].input()
-		history.append(("pin", pin_name, data))
+		self.history.append(tuple("pin", pin_name, data))
 		return data
 
 	#  Run output GPIO pin as clock for given number of cycles
@@ -105,13 +106,13 @@ class Communicator:
 	# Receive serial signal over named serial interface
 	def receive_serial(self, bus_name):
 		data = self.config.pin_outputs[bus_name].input()
-		history.append(("serial", bus_name, data))
+		self.history.append(tuple("serial", bus_name, data))
 		return data
 
 	# Run virtual oscilloscope given number of cycles
 	def run_osc(self, osc_name, cycles):
 		data = self.config.virtual_oscs[osc_name].run(cycles)
-		history.append("osc", osc_name, data)
+		self.history.append(("osc", osc_name, data))
 		return data
 
 	#def run_oscs(self, osc_names, cycles):
@@ -119,7 +120,7 @@ class Communicator:
 
 	# Return or save the current history
 	def save_history(self, output_path=None):
-		if file_path != None:
+		if output_path != None:
 			with open(output_path, 'wb') as f:
 				pickle.dump(self.history, f)
 		
